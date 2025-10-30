@@ -1,12 +1,14 @@
 //Name: Abhiram Ruthala
 //Computing ID: kas4kj
 //HW Name: HW 8 - Recursion
-//Source Used: https://www.youtube.com/watch?v=k-7jJP7QFEM, Google AI, https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40it20096298%2Frecursion-07d8005f1b40&psig=AOvVaw1yDsFIvbrahwzpjz1e_fhB&ust=1761872827098000&source=images&cd=vfe&opi=89978449&ved=0CAMQjB1qFwoTCPjX3PHdypADFQAAAAAdAAAAABAJ
+//Source Used: https://www.youtube.com/watch?v=k-7jJP7QFEM, Google AI, https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40it20096298%2Frecursion-07d8005f1b40&psig=AOvVaw1yDsFIvbrahwzpjz1e_fhB&ust=1761872827098000&source=images&cd=vfe&opi=89978449&ved=0CAMQjB1qFwoTCPjX3PHdypADFQAAAAAdAAAAABAJ, ChatGPT 5 for Debugging
+
 import java.util.Random;
 
 public class Password {
 
     private String curPassword;
+
     public Password() {
         this.curPassword = "";
     }
@@ -26,29 +28,31 @@ public class Password {
     }
 
     public boolean setPassword(String password) {
-        if(getPassword().length() > password.length()) {
-            for(int i = 0; i < (getPassword().length()-password.length()); i++) {
-                password = password + " ";
-            }
-        } else if (getPassword().length() < password.length()) {
-            for(int i = 0; i < (password.length()- getPassword().length()); i++) {
-                this.curPassword = this.curPassword + " ";
-            }
-        }
-        
-        int counter = 0;
-        for(int i = 0; i < password.length(); i++) {
-            if (password.charAt(i) != curPassword.charAt(i)) {
-                counter++;
-            }
-        }
+//        if(getPassword().length() > password.length()) {
+//            for(int i = 0; i < (getPassword().length()-password.length()); i++) {
+//                password = password + " ";
+//            }
+//        } else if (getPassword().length() < password.length()) {
+//            for(int i = 0; i < (password.length()- getPassword().length()); i++) {
+//                this.curPassword = this.curPassword + " ";
+//            }
+//        }
+//
+//        int counter = 0;
+//        for(int i = 0; i < password.length(); i++) {
+//            if (password.charAt(i) != curPassword.charAt(i)) {
+//                counter++;
+//            }
+//        }
 
         if(password.contains("0") || password.contains("1") || password.contains("2") || password.contains("3") || password.contains("4") || password.contains("5") || password.contains("6") || password.contains("7") || password.contains("8") || password.contains("9")) {
             return true;
         } else if(password.equals(this.curPassword)) {
             return false;
-        } else if (counter > (curPassword.length()/2)) {
+        } else if(changePassword(curPassword,  password) == false) {
             return false;
+        } else if (changePassword(curPassword, password)) {
+            return true;
         } else {
             return false;
         }
@@ -68,9 +72,8 @@ public class Password {
         if(curPassword.contains(sense[index])) {
             return true;
         } else {
-            containsADigit(index+1);
+            return containsADigit(index+1);
         }
-        return false;
     }
 
 
@@ -106,12 +109,11 @@ public class Password {
     //other outlook to check if potential is equal to existing curPassword.
     private boolean checkIfPasswordIsEqualOrNot(String password, int index) {
 
-        if(password.charAt(index) == getPassword().charAt(index)) {
-            checkIfPasswordIsEqualOrNot(password, index+1);
-        } else {
+        if(password.charAt(index) != getPassword().charAt(index)) {
             return false;
+        } else {
+            return checkIfPasswordIsEqualOrNot(password, index+1);
         }
-        return true;
 
     }
 
@@ -126,14 +128,12 @@ public class Password {
             }
         }
 
-        if(password.charAt(index) == getPassword().charAt(index)) {
+        if(password.charAt(index) != getPassword().charAt(index)) {
             result+=1;
         }
         checkNumberOfDifferences(password, index+1, result);
 
-
         return result;
-
     }
 
 //    //recursive - check number of differences between potential and new curPassword.
