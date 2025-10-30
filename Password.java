@@ -45,15 +45,9 @@ public class Password {
 //            }
 //        }
 
-        if(password.contains("0") || password.contains("1") || password.contains("2") || password.contains("3") || password.contains("4") || password.contains("5") || password.contains("6") || password.contains("7") || password.contains("8") || password.contains("9")) {
+        if((password.contains("0") || password.contains("1") || password.contains("2") || password.contains("3") || password.contains("4") || password.contains("5") || password.contains("6") || password.contains("7") || password.contains("8") || password.contains("9")) && !(password.equals(this.curPassword)) && changePassword(this.curPassword, password)) {
             return true;
-        } else if(password.equals(this.curPassword)) {
-            return false;
-        } else if(changePassword(curPassword,  password) == false) {
-            return false;
-        } else if (changePassword(curPassword, password)) {
-            return true;
-        } else {
+        } else{
             return false;
         }
     }
@@ -169,10 +163,23 @@ public class Password {
     public boolean changePassword(String oldPassword, String newPassword){
         int counter = 0;
         int digitCount = 0;
+//        String tempNewPassword = newPassword;
+//        String tempOldPassword = oldPassword;
         String[] sense = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
         if(newPassword.equals(oldPassword)){
             return false;
+        }
+
+        if(newPassword.length() - oldPassword.length() < 0) {
+            for(int i = 0; i < (oldPassword.length() - newPassword.length()); i++) {
+                newPassword = newPassword + " ";
+            }
+
+        } else if(newPassword.length() - oldPassword.length() > 0) {
+            for(int i = 0; i < (newPassword.length() - oldPassword.length()); i++) {
+                oldPassword = oldPassword + " ";
+            }
         }
 
         for(int i = 0; i < newPassword.length(); i++){
@@ -185,6 +192,13 @@ public class Password {
                 digitCount++;
             }
         }
+
+
+//        if(Math.abs(newPassword.length()-oldPassword.length()) > oldPassword.length()/2 && digitCount > 0) {
+//            return true;
+//        } else if (counter > oldPassword.length()/2 && digitCount > 0) {
+//            return true;
+//        }
 
         if(counter > (oldPassword.length()/2) && digitCount > 0){
             return true;
