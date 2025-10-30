@@ -25,9 +25,20 @@ public class Password {
         return curPassword;
     }
 
-    public boolean setPassword(String curPassword) {
-        if(curPassword.contains("0") || curPassword.contains("1") || curPassword.contains("2") || curPassword.contains("3") || curPassword.contains("4") || curPassword.contains("5") || curPassword.contains("6") || curPassword.contains("7") || curPassword.contains("8") || curPassword.contains("9")) {
+    public boolean setPassword(String password) {
+        int counter = 0;
+        for(int i = 0; i < password.length(); i++) {
+            if (password.charAt(i) != curPassword.charAt(i)) {
+                counter++;
+            }
+        }
+
+        if(password.contains("0") || password.contains("1") || password.contains("2") || password.contains("3") || password.contains("4") || password.contains("5") || password.contains("6") || password.contains("7") || password.contains("8") || password.contains("9")) {
             return true;
+        } else if(password.equals(this.curPassword)) {
+            return false;
+        } else if (counter > (curPassword.length()/2)) {
+            return false;
         } else {
             return false;
         }
@@ -197,7 +208,7 @@ public class Password {
         }
         if(obj instanceof Password){
             Password p2 = (Password)obj;
-            if(p2.equals(this.curPassword)){
+            if(p2.getPassword().equals(getPassword())) {
                 return true;
             } else {
                 return false;
