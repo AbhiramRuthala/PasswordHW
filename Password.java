@@ -26,6 +26,16 @@ public class Password {
     }
 
     public boolean setPassword(String password) {
+        if(getPassword().length() > password.length()) {
+            for(int i = 0; i < (getPassword().length()-password.length()); i++) {
+                password = password + " ";
+            }
+        } else if (getPassword().length() < password.length()) {
+            for(int i = 0; i < (password.length()- getPassword().length()); i++) {
+                this.curPassword = this.curPassword + " ";
+            }
+        }
+        
         int counter = 0;
         for(int i = 0; i < password.length(); i++) {
             if (password.charAt(i) != curPassword.charAt(i)) {
