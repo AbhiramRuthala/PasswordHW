@@ -25,8 +25,12 @@ public class Password {
         return curPassword;
     }
 
-    public void setPassword(String curPassword) {
-        this.curPassword = curPassword;
+    public boolean setPassword(String curPassword) {
+        if(curPassword.contains("0") || curPassword.contains("1") || curPassword.contains("2") || curPassword.contains("3") || curPassword.contains("4") || curPassword.contains("5") || curPassword.contains("6") || curPassword.contains("7") || curPassword.contains("8") || curPassword.contains("9")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 //    private boolean containsADigitRecursive(char number) {
